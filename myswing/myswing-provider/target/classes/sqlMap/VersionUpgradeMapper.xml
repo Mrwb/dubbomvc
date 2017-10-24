@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="VersionUpgradeMapper">
+	<!-- 映射结果集 -->
+	<resultMap id="versionUpgradeResultMap" type="com.myswing.model.VersionUpgrade">
+		<id property="id" column="id" jdbcType="VARCHAR"/>
+    	<result property="name" column="name" jdbcType="VARCHAR"/>
+    	<result property="versionName" column="version_name" jdbcType="VARCHAR"/>
+    	<result property="softwareVersion" column="software_version" jdbcType="VARCHAR"/>
+    	<result property="versionCode" column="version_code" jdbcType="INTEGER"/>
+    	<result property="url" column="url" jdbcType="VARCHAR"/>
+    	<result property="value" column="value" jdbcType="VARCHAR"/>
+    	<result property="type" column="type" jdbcType="VARCHAR"/>
+    	<result property="status" column="status" jdbcType="BIT"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="versionUpgradeColumnList">
+	    <![CDATA[
+			id,name,version_name,version_code,software_version,url,value,type,status
+	    ]]>
+	</sql>
+	
+	<!-- 统计总条目数 -->
+	<select id="findCount" resultType="java.lang.Integer" parameterType="com.myswing.model.VersionUpgrade">
+		SELECT count(1)
+	    <![CDATA[
+	    FROM version_upgrade 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=VARCHAR}
+			   </if>
+		       <if test="name != null">
+					AND name = #{name,jdbcType=VARCHAR}
+			   </if>
+		       <if test="versionName != null">
+					AND version_name = #{versionName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="versionCode != null">
+					AND version_code = #{versionCode,jdbcType=INTEGER}
+			   </if>
+		       <if test="url != null">
+					AND url = #{url,jdbcType=VARCHAR}
+			   </if>
+		       <if test="value != null">
+					AND value = #{value,jdbcType=VARCHAR}
+			   </if>
+		       <if test="type != null">
+					AND type = #{type,jdbcType=VARCHAR}
+			   </if>
+		       <if test="status != null">
+					AND status = #{status,jdbcType=BIT}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据主键查询 -->
+	<select id="selectById" resultMap="versionUpgradeResultMap"  parameterType="java.lang.String">
+		SELECT <include refid="versionUpgradeColumnList" />
+	    <![CDATA[
+	    FROM version_upgrade 
+        WHERE 
+	        id = #{id,jdbcType=VARCHAR}
+	    ]]>
+	</select>
+	
+	
+		<!-- 根据条件查询 -->
+	<select id="selectOneByCondition" resultMap="versionUpgradeResultMap" parameterType="com.myswing.model.VersionUpgrade">
+		SELECT <include refid="versionUpgradeColumnList" />
+	    <![CDATA[
+	    FROM version_upgrade 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=VARCHAR}
+			   </if>
+		       <if test="name != null">
+					AND name = #{name,jdbcType=VARCHAR}
+			   </if>
+		       <if test="versionName != null">
+					AND version_name = #{versionName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="softwareVersion != null">
+					AND software_version = #{softwareVersion,jdbcType=VARCHAR}
+			   </if>
+		       <if test="versionCode != null">
+					AND version_code = #{versionCode,jdbcType=INTEGER}
+			   </if>
+		       <if test="url != null">
+					AND url = #{url,jdbcType=VARCHAR}
+			   </if>
+		       <if test="value != null">
+					AND value = #{value,jdbcType=VARCHAR}
+			   </if>
+		       <if test="type != null">
+					AND type = #{type,jdbcType=VARCHAR}
+			   </if>
+		       <if test="status != null">
+					AND status = #{status,jdbcType=BIT}
+			   </if>
+		</where>
+		LIMIT 1
+	</select>
+
+	<!-- 根据ID删除 -->
+    <delete id="deleteById"  parameterType="java.lang.String">
+	    <![CDATA[
+	        DELETE FROM version_upgrade 
+	        WHERE
+	        id = #{id,jdbcType=VARCHAR}
+	    ]]>
+    </delete>
+   
+  	
+  	<!-- 根据参数对象中有值的进行插入-->
+	<insert id="insert" parameterType="com.myswing.model.VersionUpgrade" >
+		insert into version_upgrade
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    id,
+		  	</if>
+	     	<if test="name != null" >
+		    name,
+		  	</if>
+	     	<if test="versionName != null" >
+		    version_name,
+		  	</if>
+		  	<if test="softwareVersion != null">
+			software_version
+			</if>
+	     	<if test="versionCode != null" >
+		    version_code,
+		  	</if>
+	     	<if test="url != null" >
+		    url,
+		  	</if>
+	     	<if test="value != null" >
+		    value,
+		  	</if>
+	     	<if test="type != null" >
+		    type,
+		  	</if>
+	     	<if test="status != null" >
+		    status,
+		  	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    #{id,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="name != null" >
+		    #{name,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="versionName != null" >
+		    #{versionName,jdbcType=VARCHAR},
+		  	</if>
+		  	<if test="softwareVersion != null">
+			#{softwareVersion,jdbcType=VARCHAR}
+			</if>
+	     	<if test="versionCode != null" >
+		    #{versionCode,jdbcType=INTEGER},
+		  	</if>
+	     	<if test="url != null" >
+		    #{url,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="value != null" >
+		    #{value,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="type != null" >
+		    #{type,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="status != null" >
+		    #{status,jdbcType=BIT},
+		  	</if>
+		</trim>
+	</insert>
+	
+	
+	<!-- 根据ID进行更新 -->
+	<update id="updateById"  parameterType="com.myswing.model.VersionUpgrade">
+		update version_upgrade
+		<set>
+			<if test="id != null" >
+			 id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null" >
+			 name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="versionName != null" >
+			 version_name = #{versionName,jdbcType=VARCHAR},
+			</if>
+			<if test="softwareVersion != null">
+			software_version = #{softwareVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="versionCode != null" >
+			 version_code = #{versionCode,jdbcType=INTEGER},
+			</if>
+			<if test="url != null" >
+			 url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null" >
+			 value = #{value,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+			 type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+			 status = #{status,jdbcType=BIT},
+			</if>
+		</set>
+		where
+			id = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+
