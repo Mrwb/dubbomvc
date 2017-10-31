@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="ApprovalFlowRecordMapper">
+	<!-- 映射结果集 -->
+	<resultMap id="approvalFlowRecordResultMap" type="com.myswing.model.ApprovalFlowRecord">
+		<id property="id" column="id" jdbcType="BIGINT"/>
+    	<result property="approvalInfoId" column="approval_info_id" jdbcType="BIGINT"/>
+    	<result property="approvalFormInfo" column="approval_form_info" jdbcType="LONGVARCHAR"/>
+    	<result property="approvalVersion" column="approval_version" jdbcType="VARCHAR"/>
+    	<result property="approvalFormContent" column="approval_form_content" jdbcType="LONGVARCHAR"/>
+    	<result property="flowRule" column="flow_rule" jdbcType="LONGVARCHAR"/>
+    	<result property="ccerRoleIds" column="ccer_role_ids" jdbcType="LONGVARCHAR"/>
+    	<result property="proposerId" column="proposer_id" jdbcType="BIGINT"/>
+    	<result property="proposerName" column="proposer_name" jdbcType="VARCHAR"/>
+    	<result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
+    	<result property="approvalCategory" column="approval_category" jdbcType="TINYINT"/>
+    	<result property="approvalStatus" column="approval_status" jdbcType="TINYINT"/>
+    	<result property="approvalKey" column="approval_key" jdbcType="VARCHAR"/>
+    	<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="approvalFlowRecordColumnList">
+	    <![CDATA[
+			id,approval_info_id,approval_form_info,approval_version,approval_form_content,flow_rule,ccer_role_ids,proposer_id,proposer_name,department_name,approval_category,approval_status,approval_key,create_time
+	    ]]>
+	</sql>
+	
+	<!-- 统计总条目数 -->
+	<select id="findCount" resultType="java.lang.Integer" parameterType="com.myswing.model.ApprovalFlowRecord">
+		SELECT count(1)
+	    <![CDATA[
+	    FROM approval_flow_record 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalInfoId != null">
+					AND approval_info_id = #{approvalInfoId,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalFormInfo != null">
+					AND approval_form_info = #{approvalFormInfo,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="approvalVersion != null">
+					AND approval_version = #{approvalVersion,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalFormContent != null">
+					AND approval_form_content = #{approvalFormContent,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="flowRule != null">
+					AND flow_rule = #{flowRule,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="ccerRoleIds != null">
+					AND ccer_role_ids = #{ccerRoleIds,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="proposerId != null">
+					AND proposer_id = #{proposerId,jdbcType=BIGINT}
+			   </if>
+		       <if test="proposerName != null">
+					AND proposer_name = #{proposerName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="departmentName != null">
+					AND department_name = #{departmentName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalCategory != null">
+					AND approval_category = #{approvalCategory,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalStatus != null">
+					AND approval_status = #{approvalStatus,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalKey != null">
+					AND approval_key = #{approvalKey,jdbcType=VARCHAR}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据主键查询 -->
+	<select id="selectById" resultMap="approvalFlowRecordResultMap"  parameterType="java.lang.String">
+		SELECT <include refid="approvalFlowRecordColumnList" />
+	    <![CDATA[
+	    FROM approval_flow_record 
+        WHERE 
+	        id = #{id,jdbcType=BIGINT}
+	    ]]>
+	</select>
+	
+	<!-- 根据条件查询 -->
+	<select id="selectByCondition" resultMap="approvalFlowRecordResultMap" parameterType="com.myswing.page.ApprovalFlowRecordPage">
+		SELECT <include refid="approvalFlowRecordColumnList" />
+	    <![CDATA[
+	    FROM approval_flow_record 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalInfoId != null">
+					AND approval_info_id = #{approvalInfoId,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalFormInfo != null">
+					AND approval_form_info = #{approvalFormInfo,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="approvalVersion != null">
+					AND approval_version = #{approvalVersion,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalFormContent != null">
+					AND approval_form_content = #{approvalFormContent,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="flowRule != null">
+					AND flow_rule = #{flowRule,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="ccerRoleIds != null">
+					AND ccer_role_ids = #{ccerRoleIds,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="proposerId != null">
+					AND proposer_id = #{proposerId,jdbcType=BIGINT}
+			   </if>
+		       <if test="proposerName != null">
+					AND proposer_name = #{proposerName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="departmentName != null">
+					AND department_name = #{departmentName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalCategory != null">
+					AND approval_category = #{approvalCategory,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalStatus != null">
+					AND approval_status = #{approvalStatus,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalKey != null">
+					AND approval_key = #{approvalKey,jdbcType=VARCHAR}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		</where>
+		LIMIT ${startPage},${rows}
+	</select>
+	
+		<!-- 根据条件查询 -->
+	<select id="selectOneByCondition" resultMap="approvalFlowRecordResultMap" parameterType="com.myswing.model.ApprovalFlowRecord">
+		SELECT <include refid="approvalFlowRecordColumnList" />
+	    <![CDATA[
+	    FROM approval_flow_record 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalInfoId != null">
+					AND approval_info_id = #{approvalInfoId,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalFormInfo != null">
+					AND approval_form_info = #{approvalFormInfo,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="approvalVersion != null">
+					AND approval_version = #{approvalVersion,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalFormContent != null">
+					AND approval_form_content = #{approvalFormContent,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="flowRule != null">
+					AND flow_rule = #{flowRule,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="ccerRoleIds != null">
+					AND ccer_role_ids = #{ccerRoleIds,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="proposerId != null">
+					AND proposer_id = #{proposerId,jdbcType=BIGINT}
+			   </if>
+		       <if test="proposerName != null">
+					AND proposer_name = #{proposerName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="departmentName != null">
+					AND department_name = #{departmentName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalCategory != null">
+					AND approval_category = #{approvalCategory,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalStatus != null">
+					AND approval_status = #{approvalStatus,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalKey != null">
+					AND approval_key = #{approvalKey,jdbcType=VARCHAR}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 根据条件查询全部 -->
+	<select id="selectByConditionAll" resultMap="approvalFlowRecordResultMap" parameterType="com.myswing.page.ApprovalFlowRecordPage">
+		SELECT <include refid="approvalFlowRecordColumnList" />
+	    <![CDATA[
+	    FROM approval_flow_record 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalInfoId != null">
+					AND approval_info_id = #{approvalInfoId,jdbcType=BIGINT}
+			   </if>
+		       <if test="approvalFormInfo != null">
+					AND approval_form_info = #{approvalFormInfo,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="approvalVersion != null">
+					AND approval_version = #{approvalVersion,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalFormContent != null">
+					AND approval_form_content = #{approvalFormContent,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="flowRule != null">
+					AND flow_rule = #{flowRule,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="ccerRoleIds != null">
+					AND ccer_role_ids = #{ccerRoleIds,jdbcType=LONGVARCHAR}
+			   </if>
+		       <if test="proposerId != null">
+					AND proposer_id = #{proposerId,jdbcType=BIGINT}
+			   </if>
+		       <if test="proposerName != null">
+					AND proposer_name = #{proposerName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="departmentName != null">
+					AND department_name = #{departmentName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="approvalCategory != null">
+					AND approval_category = #{approvalCategory,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalStatus != null">
+					AND approval_status = #{approvalStatus,jdbcType=TINYINT}
+			   </if>
+		       <if test="approvalKey != null">
+					AND approval_key = #{approvalKey,jdbcType=VARCHAR}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据ID删除 -->
+    <delete id="deleteById"  parameterType="java.lang.String">
+	    <![CDATA[
+	        DELETE FROM approval_flow_record 
+	        WHERE
+	        id = #{id,jdbcType=BIGINT}
+	    ]]>
+    </delete>
+   
+  	
+  	<!-- 根据参数对象中有值的进行插入-->
+	<insert id="insert" parameterType="com.myswing.model.ApprovalFlowRecord" >
+		insert into approval_flow_record
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    id,
+		  	</if>
+	     	<if test="approvalInfoId != null" >
+		    approval_info_id,
+		  	</if>
+	     	<if test="approvalFormInfo != null" >
+		    approval_form_info,
+		  	</if>
+	     	<if test="approvalVersion != null" >
+		    approval_version,
+		  	</if>
+	     	<if test="approvalFormContent != null" >
+		    approval_form_content,
+		  	</if>
+	     	<if test="flowRule != null" >
+		    flow_rule,
+		  	</if>
+	     	<if test="ccerRoleIds != null" >
+		    ccer_role_ids,
+		  	</if>
+	     	<if test="proposerId != null" >
+		    proposer_id,
+		  	</if>
+	     	<if test="proposerName != null" >
+		    proposer_name,
+		  	</if>
+	     	<if test="departmentName != null" >
+		    department_name,
+		  	</if>
+	     	<if test="approvalCategory != null" >
+		    approval_category,
+		  	</if>
+	     	<if test="approvalStatus != null" >
+		    approval_status,
+		  	</if>
+	     	<if test="approvalKey != null" >
+		    approval_key,
+		  	</if>
+	     	<if test="createTime != null" >
+		    create_time,
+		  	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    #{id,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="approvalInfoId != null" >
+		    #{approvalInfoId,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="approvalFormInfo != null" >
+		    #{approvalFormInfo,jdbcType=LONGVARCHAR},
+		  	</if>
+	     	<if test="approvalVersion != null" >
+		    #{approvalVersion,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="approvalFormContent != null" >
+		    #{approvalFormContent,jdbcType=LONGVARCHAR},
+		  	</if>
+	     	<if test="flowRule != null" >
+		    #{flowRule,jdbcType=LONGVARCHAR},
+		  	</if>
+	     	<if test="ccerRoleIds != null" >
+		    #{ccerRoleIds,jdbcType=LONGVARCHAR},
+		  	</if>
+	     	<if test="proposerId != null" >
+		    #{proposerId,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="proposerName != null" >
+		    #{proposerName,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="departmentName != null" >
+		    #{departmentName,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="approvalCategory != null" >
+		    #{approvalCategory,jdbcType=TINYINT},
+		  	</if>
+	     	<if test="approvalStatus != null" >
+		    #{approvalStatus,jdbcType=TINYINT},
+		  	</if>
+	     	<if test="approvalKey != null" >
+		    #{approvalKey,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="createTime != null" >
+		    #{createTime,jdbcType=TIMESTAMP},
+		  	</if>
+		</trim>
+	</insert>
+	
+	
+	<!-- 根据ID进行更新 -->
+	<update id="updateById"  parameterType="com.myswing.model.ApprovalFlowRecord">
+		update approval_flow_record
+		<set>
+			<if test="id != null" >
+			 id = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="approvalInfoId != null" >
+			 approval_info_id = #{approvalInfoId,jdbcType=BIGINT},
+			</if>
+			<if test="approvalFormInfo != null" >
+			 approval_form_info = #{approvalFormInfo,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="approvalVersion != null" >
+			 approval_version = #{approvalVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalFormContent != null" >
+			 approval_form_content = #{approvalFormContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="flowRule != null" >
+			 flow_rule = #{flowRule,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="ccerRoleIds != null" >
+			 ccer_role_ids = #{ccerRoleIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="proposerId != null" >
+			 proposer_id = #{proposerId,jdbcType=BIGINT},
+			</if>
+			<if test="proposerName != null" >
+			 proposer_name = #{proposerName,jdbcType=VARCHAR},
+			</if>
+			<if test="departmentName != null" >
+			 department_name = #{departmentName,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalCategory != null" >
+			 approval_category = #{approvalCategory,jdbcType=TINYINT},
+			</if>
+			<if test="approvalStatus != null" >
+			 approval_status = #{approvalStatus,jdbcType=TINYINT},
+			</if>
+			<if test="approvalKey != null" >
+			 approval_key = #{approvalKey,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null" >
+			 create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+
