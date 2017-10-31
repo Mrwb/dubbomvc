@@ -1,11 +1,14 @@
 package com.myswing.dao;
 
-
-
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * @version 1.0
+ * @author Eric.wang
+ * @date 2017/11/01 14:48
+ * @email 1595905476(a)qq.com
+ */
 public interface MybatisDao {
 	/**
 	 * 返回多个内容，并用List封装
@@ -157,4 +160,24 @@ public interface MybatisDao {
 	 * @return
 	 */
 	public int deleteObj(String key, Object obj);
+	/**
+	 * 根据id删除数据
+	 * @author wangbo
+	 * @date 2016-09-06 下午02:08:52
+	 * @description
+	 * @param key
+	 * @param obj
+	 * @return
+	 */
+	public int deleteObjById(String key, Object obj);
+	/**
+	 * 统计计数
+	 * @author wangbo
+	 * @date 2016-09-06 下午02:08:52
+	 * @description
+	 * @param key
+	 * @param obj
+	 * @return
+	 */
+	public int queryForCount(String key, Object obj);
 }

@@ -1,0 +1,465 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>   
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<#macro mapperEl value>${r"#{"}${value}}</#macro>
+<#macro namespace>${basepackage}.mapper.${className}Mapper</#macro>
+<#macro parameConditionFn value columnType>${r"#{"}${value}${r","}jdbcType=${columnType}${r"}"}</#macro>
+<#macro whereConditionFn1 beanProperty value>${r"#{"}${beanProperty}.${value}${r"}"}</#macro>
+<#--
+<#macro whereConditionFn2 beanProperty value columnType>${r"#{"}${beanProperty}.${value}${r","}jdbcType=${columnType}${r"}"}</#macro>
+-->
+
+
+<#macro jspEl value>${r"${"}${value}}</#macro>
+
+<#-- ${basepackage}.${mapper}. -->
+<mapper namespace="${className}Mapper">
+	<!-- 映射结果集 -->
+	<resultMap id="${classNameFirstLower}ResultMap" type="${basepackage}.${model}.${className}">
+		<#list table.pkColumns as column>
+		<id property="${column.columnNameFirstLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
+    	</#list>
+    	<#list table.notPkColumns as column>
+    	<result property="${column.columnNameFirstLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
+    	</#list>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="${classNameFirstLower}ColumnList">
+	    <![CDATA[
+			<#list table.columns as column>${column.sqlName}<#if column_has_next>,</#if></#list>
+	    ]]>
+	</sql>
+	
+	<!-- 统计总条目数 -->
+	<select id="findCount" resultType="java.lang.Integer" parameterType="${basepackage}.${model}.${className}">
+		SELECT count(1)
+	    <![CDATA[
+	    FROM ${table.sqlName} 
+	    ]]>
+        <where>	  
+        	1=1      				
+	       <#list table.columns as column>
+		       <if test="${column.columnNameFirstLower} != null">
+					AND ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/>
+			   </if>
+	       </#list>			
+		</where>
+	</select>
+	
+	<!-- 根据主键查询 -->
+	<select id="selectById" resultMap="${classNameFirstLower}ResultMap"  parameterType="java.lang.String">
+		SELECT <include refid="${classNameFirstLower}ColumnList" />
+	    <![CDATA[
+	    FROM ${table.sqlName} 
+        WHERE 
+		<#list table.pkColumns  as column>
+	        ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/><#if column_has_next>,</#if>
+	    </#list>   
+	    ]]>
+	</select>
+	
+	<!-- 根据条件查询 -->
+	<select id="selectByCondition" resultMap="${classNameFirstLower}ResultMap" parameterType="${basepackage}.${page}.${className}Page">
+		SELECT <include refid="${classNameFirstLower}ColumnList" />
+	    <![CDATA[
+	    FROM ${table.sqlName} 
+	    ]]>
+        <where>	  
+        	1=1      				
+	       <#list table.columns as column>
+		       <if test="${column.columnNameFirstLower} != null">
+					AND ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/>
+			   </if>
+	       </#list>			
+		</where>
+		LIMIT ${r"${"}startPage${r"}"},${r"${"}rows${r"}"}
+	</select>
+	
+		<!-- 根据条件查询 -->
+	<select id="selectOneByCondition" resultMap="${classNameFirstLower}ResultMap" parameterType="${basepackage}.${model}.${className}">
+		SELECT <include refid="${classNameFirstLower}ColumnList" />
+	    <![CDATA[
+	    FROM ${table.sqlName} 
+	    ]]>
+        <where>	  
+        	1=1      				
+	       <#list table.columns as column>
+		       <if test="${column.columnNameFirstLower} != null">
+					AND ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/>
+			   </if>
+	       </#list>			
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 根据条件查询全部 -->
+	<select id="selectByConditionAll" resultMap="${classNameFirstLower}ResultMap" parameterType="${basepackage}.${page}.${className}Page">
+		SELECT <include refid="${classNameFirstLower}ColumnList" />
+	    <![CDATA[
+	    FROM ${table.sqlName} 
+	    ]]>
+        <where>	  
+        	1=1      				
+	       <#list table.columns as column>
+		       <if test="${column.columnNameFirstLower} != null">
+					AND ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/>
+			   </if>
+	       </#list>			
+		</where>
+	</select>
+	
+	<!-- 根据ID删除 -->
+    <delete id="deleteById"  parameterType="java.lang.String">
+	    <![CDATA[
+	        DELETE FROM ${table.sqlName} 
+	        WHERE
+			<#list table.pkColumns  as column>
+	        ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/><#if column_has_next>,</#if>
+	        </#list> 
+	    ]]>
+    </delete>
+   
+  	
+  	<!-- 根据参数对象中有值的进行插入-->
+	<insert id="insert" parameterType="${basepackage}.${model}.${className}" >
+		insert into ${table.sqlName}
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	    <#list table.columns as column>
+	    	<#if !idAnddefaultColum?contains(column.sqlName)>
+	     	<if test="${column.columnNameFirstLower} != null" >
+		    ${column.sqlName},
+		  	</if>
+		  	</#if>
+        </#list>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<#list table.columns as column>
+			<#if !idAnddefaultColum?contains(column.sqlName)>
+	     	<if test="${column.columnNameFirstLower} != null" >
+		    <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/>,
+		  	</if>
+		  	</#if>
+        </#list>
+		</trim>
+	</insert>
+	
+	
+	<!-- 根据ID进行更新 -->
+	<update id="updateById"  parameterType="${basepackage}.${model}.${className}">
+		update ${table.sqlName}
+		<set>
+			<#list table.columns as column>
+			<#if !idAnddefaultColum?contains(column.sqlName)>
+			<if test="${column.columnNameFirstLower} != null" >
+			 ${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/>,
+			</if>
+			</#if>
+			</#list>
+		</set>
+		where
+		<#list table.pkColumns as column>
+			${column.sqlName} = <@parameConditionFn column.columnNameFirstLower column.jdbcSqlTypeName/><#if column_has_next> and </#if>
+		</#list>
+	</update>
+
+
+
+
+	<#if ((table.importedKeys.associatedTables)?size > 0)>
+	<!-- 多对一结果集合 -->
+	<resultMap id ="${classNameFirstLower}Many2OneResultMap" type ="${basepackage}.${model}.${className}">
+	<#list table.pkColumns as column>
+		<id property="${column.columnNameFirstLower}" column="${table.className}_${column.columnNameFirstLower}" />
+    </#list>
+    <#list table.notPkColumns as column>
+    	<result property="${column.columnNameFirstLower}" column="${table.className}_${column.columnNameFirstLower}" />
+    </#list>
+    
+	<#list table.importedKeys.associatedTables?values as foreignKey>
+		<#assign fkSqlTable = foreignKey.sqlTable>
+		<#assign fkTable    = fkSqlTable.className>
+		<#assign fkPojoClass = fkSqlTable.className>
+		<#assign fkPojoClassVar = fkPojoClass?uncap_first>
+		<association property="${fkPojoClassVar}" javaType="${basepackage}.${model}.${fkPojoClass}" >
+		<#list fkSqlTable.pkColumns as column>
+			<id property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+	    <#list fkSqlTable.notPkColumns as column>
+	    	<result property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+		</association>
+	
+	</#list>
+	</resultMap>
+	
+	 
+	<!-- 多对一级联查询 -->
+	<select id= "select${className}Many2One" parameterType="${basepackage}.${model}.${className}" resultMap="${classNameFirstLower}Many2OneResultMap">
+		select
+		<#list table.columns as column>
+	        t_${table.classNameLowerCase}.${column.sqlName} as ${table.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	    </#list>
+	    <#if ((table.importedKeys.associatedTables)?size > 0)>,</#if>
+	    <#list table.importedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			<#list fkSqlTable.columns as column>
+	       	t_${fkSqlTable.classNameLowerCase}.${column.sqlName} as ${fkSqlTable.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	   		</#list>
+	   		<#if foreignKey_has_next>,</#if>
+		</#list>
+		from  ${table.sqlName}  t_${table.classNameLowerCase}
+		<#list table.importedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			left outer join ${fkSqlTable.sqlName}  t_${fkSqlTable.classNameLowerCase} 
+					on   t_${table.classNameLowerCase}.${foreignKey.importKey} = t_${fkSqlTable.classNameLowerCase}.${fkSqlTable.idColumn}	
+		</#list>
+		where 1=1
+		<#list table.columns as column>
+	        and  t_${table.classNameLowerCase}.${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+	    </#list>
+	    
+		<#list table.importedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			<#assign fkTable    = fkSqlTable.className>
+			<#assign fkPojoClass = fkSqlTable.className>
+			<#assign fkPojoClassVar = fkPojoClass?uncap_first>
+			<#list fkSqlTable.columns as column>
+			and  t_${fkSqlTable.classNameLowerCase}.${column.sqlName} = <@whereConditionFn1 fkPojoClassVar column.columnNameFirstLower/>
+	   		</#list>
+		</#list>
+	</select>
+	</#if>	
+	
+	
+	<#if ((table.exportedKeys.associatedTables)?size > 0)>
+	
+	<!--  
+			一对多结果集
+			集合的嵌套结果集（Nested Results for Collection）
+	-->
+	<resultMap id ="${classNameFirstLower}One2ManyResultMap" type ="${basepackage}.${model}.${className}">
+	<#list table.pkColumns as column>
+		<id property="${column.columnNameFirstLower}" column="${table.className}_${column.columnNameFirstLower}" />
+    </#list>
+    <#list table.notPkColumns as column>
+    	<result property="${column.columnNameFirstLower}" column="${table.className}_${column.columnNameFirstLower}" />
+    </#list>
+    
+	<#list table.exportedKeys.associatedTables?values as foreignKey>
+		<#assign fkSqlTable = foreignKey.sqlTable>
+		<#assign fkTable    = fkSqlTable.className>
+		<#assign fkPojoClass = fkSqlTable.className>
+		<#assign fkPojoClassVar = fkPojoClass?uncap_first>
+		<collection property="${fkPojoClassVar}s" ofType="${basepackage}.${model}.${fkPojoClass}" >
+		<#list fkSqlTable.pkColumns as column>
+			<id property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+	    <#list fkSqlTable.notPkColumns as column>
+	    	<result property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+		</collection>
+	
+	</#list>
+	</resultMap>
+	
+	<!--  
+		一对多查询
+	-->
+	<select id= "select${className}One2Many"  parameterType="${basepackage}.${model}.${className}"   resultMap="${classNameFirstLower}One2ManyResultMap">
+		select
+		<#list table.columns as column>
+	        t_${table.classNameLowerCase}.${column.sqlName} as ${table.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	    </#list>
+	    <#if ((table.exportedKeys.associatedTables)?size > 0)>,</#if>
+	    <#list table.exportedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			<#list fkSqlTable.columns as column>
+	       	t_${fkSqlTable.classNameLowerCase}.${column.sqlName} as ${fkSqlTable.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	   		</#list>
+	   		<#if foreignKey_has_next>,</#if>
+		</#list>
+		
+		from  ${table.sqlName}  t_${table.classNameLowerCase}
+		<#list table.exportedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			left outer join ${fkSqlTable.sqlName}  t_${fkSqlTable.classNameLowerCase} 
+					on   t_${table.classNameLowerCase}.${table.idColumn} = t_${fkSqlTable.classNameLowerCase}.${foreignKey.exportKey}
+		</#list>
+		where 1=1
+		<#list table.columns as column>
+	        and  t_${table.classNameLowerCase}.${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+	    </#list>
+	</select>
+	</#if>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<#if ((table.importedKeys.associatedTables)?size > 0 &&  (table.exportedKeys.associatedTables)?size > 0 )>
+	<!-- 结果集合 -->
+	<resultMap id ="${classNameFirstLower}LeftjoinResultMap" type ="${basepackage}.${model}.${className}">
+	<#list table.pkColumns as column>
+		<id property="${column.columnNameFirstLower}" column="${table.className}_${column.columnNameFirstLower}" />
+    </#list>
+    <#list table.notPkColumns as column>
+    	<result property="${column.columnNameFirstLower}" column="${table.className}_${column.columnNameFirstLower}" />
+    </#list>
+    
+	<#list table.importedKeys.associatedTables?values as foreignKey>
+		<#assign fkSqlTable = foreignKey.sqlTable>
+		<#assign fkTable    = fkSqlTable.className>
+		<#assign fkPojoClass = fkSqlTable.className>
+		<#assign fkPojoClassVar = fkPojoClass?uncap_first>
+		<association property="${fkPojoClassVar}" javaType="${basepackage}.${model}.${fkPojoClass}" >
+		<#list fkSqlTable.pkColumns as column>
+			<id property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+	    <#list fkSqlTable.notPkColumns as column>
+	    	<result property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+		</association>
+	
+	</#list>
+	
+	<#list table.exportedKeys.associatedTables?values as foreignKey>
+		<#assign fkSqlTable = foreignKey.sqlTable>
+		<#assign fkTable    = fkSqlTable.className>
+		<#assign fkPojoClass = fkSqlTable.className>
+		<#assign fkPojoClassVar = fkPojoClass?uncap_first>
+		<collection property="${fkPojoClassVar}s" ofType="${basepackage}.${model}.${fkPojoClass}" >
+		<#list fkSqlTable.pkColumns as column>
+			<id property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+	    <#list fkSqlTable.notPkColumns as column>
+	    	<result property="${column.columnNameFirstLower}" column="${fkSqlTable.className}_${column.columnNameFirstLower}" />
+	    </#list>
+		</collection>
+	
+	</#list>
+	
+	</resultMap>
+	
+	 
+	<!-- 以该表${table.sqlName}为中心的连接查询 -->
+	<select id= "select${className}LeftJoin" parameterType="${basepackage}.${model}.${className}" resultMap="${classNameFirstLower}LeftjoinResultMap">
+		select
+		<#list table.columns as column>
+	        t_${table.classNameLowerCase}.${column.sqlName} as ${table.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	    </#list>
+	    <#if ((table.importedKeys.associatedTables)?size > 0)>,</#if>
+	    <#list table.importedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			<#list fkSqlTable.columns as column>
+	       	t_${fkSqlTable.classNameLowerCase}.${column.sqlName} as ${fkSqlTable.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	   		</#list>
+	   		<#if foreignKey_has_next>,</#if>
+		</#list>
+		
+		<#if ((table.exportedKeys.associatedTables)?size > 0)>,</#if>
+	    <#list table.exportedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			<#list fkSqlTable.columns as column>
+	       	t_${fkSqlTable.classNameLowerCase}.${column.sqlName} as ${fkSqlTable.className}_${column.columnNameFirstLower}<#if column_has_next>,</#if>
+	   		</#list>
+	   		<#if foreignKey_has_next>,</#if>
+		</#list>
+		from  ${table.sqlName}  t_${table.classNameLowerCase}
+		<#list table.importedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			left outer join ${fkSqlTable.sqlName}  t_${fkSqlTable.classNameLowerCase} 
+					on   t_${table.classNameLowerCase}.${foreignKey.importKey} = t_${fkSqlTable.classNameLowerCase}.${fkSqlTable.idColumn}	
+		</#list>
+		<#list table.exportedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			left outer join ${fkSqlTable.sqlName}  t_${fkSqlTable.classNameLowerCase} 
+					on   t_${table.classNameLowerCase}.${table.idColumn} = t_${fkSqlTable.classNameLowerCase}.${foreignKey.exportKey}
+		</#list>
+		where 1=1
+		<#list table.columns as column>
+	        and  t_${table.classNameLowerCase}.${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+	    </#list>
+	    
+		<#list table.importedKeys.associatedTables?values as foreignKey>
+			<#assign fkSqlTable = foreignKey.sqlTable>
+			<#assign fkTable    = fkSqlTable.className>
+			<#assign fkPojoClass = fkSqlTable.className>
+			<#assign fkPojoClassVar = fkPojoClass?uncap_first>
+			<#list fkSqlTable.columns as column>
+			and  t_${fkSqlTable.classNameLowerCase}.${column.sqlName} = <@whereConditionFn1 fkPojoClassVar column.columnNameFirstLower/>
+	   		</#list>
+		</#list>
+		
+		
+	</select>
+	</#if>	
+	
+	
+	
+</mapper>
+
+
+
+<#--
+去结尾的字符串
+-->
+
+
+
+<#macro macColumnJoin table>
+<#assign joinStr=""/>
+<#assign joinStr_len=0/>
+<#list table.columns as column>
+	<#if !idAnddefaultColum?contains(column.sqlName)>
+		<#assign joinStr = joinStr + column.sqlName/>
+		<#if column_has_next>
+			<#assign joinStr = joinStr + ","/>
+		</#if>
+	</#if>
+</#list>
+<#if joinStr?ends_with(",")>
+	<#assign joinStr_len = joinStr?length - 1/>
+	<#assign joinStr = joinStr?substring(0, joinStr_len)/>
+</#if>${joinStr}</#macro>
+
+
+<#macro macColumnJoinValue table>
+<#assign joinStr=""/>
+<#assign joinStr_len=0/>
+<#list table.columns as column>
+	<#if !idAnddefaultColum?contains(column.sqlName)>
+		<#assign temp=r"#{"+column.columnNameFirstLower+r",jdbcType="+column.jdbcSqlTypeName+r"}" />
+		<#assign joinStr = joinStr + temp />
+		<#if column_has_next>
+			<#assign joinStr = joinStr + ","/>
+		</#if>
+	</#if>
+</#list>
+<#if joinStr?ends_with(",")>
+	<#assign joinStr_len = joinStr?length - 1/>
+	<#assign joinStr = joinStr?substring(0, joinStr_len)/>
+</#if>${joinStr}</#macro>
+

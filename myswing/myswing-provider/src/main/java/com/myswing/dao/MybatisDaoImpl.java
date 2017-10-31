@@ -1,15 +1,18 @@
 package com.myswing.dao;
 
-
-
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
+
+/**
+ * @version 1.0
+ * @author Eric.wang
+ * @date 2017/11/01 14:48
+ * @email 1595905476(a)qq.com
+ */
 public class MybatisDaoImpl extends SqlSessionTemplate  implements MybatisDao {
 	@Resource(name = "sqlSessionFactory")
 	private SqlSessionFactory sqlSessionFactory;
@@ -70,4 +73,12 @@ public class MybatisDaoImpl extends SqlSessionTemplate  implements MybatisDao {
 	public Object queryForId(String key, String id) {
 		return selectOne(key,id);
 	}
+	
+    public int queryForCount(String key, Object obj) {
+	    return selectOne(key, obj);
+	}
+    
+    public int deleteObjById(String key, Object obj) {
+        return delete(key, obj);
+    }
 }

@@ -31,5 +31,8 @@
     
      <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
     <dubbo:reference id="versionUpgradeService" check="false" interface="com.myswing.api.VersionUpgradeService"/>
+    
+        <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+    <dubbo:reference id="approvalFlowRecordService" check="false" interface="com.myswing.api.ApprovalFlowRecordService"/>
 
 </beans>
