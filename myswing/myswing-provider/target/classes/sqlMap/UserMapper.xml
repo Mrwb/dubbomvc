@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+	<!-- 映射结果集 -->
+	<resultMap id="userResultMap" type="com.myswing.model.User">
+		<id property="id" column="id" jdbcType="BIGINT"/>
+    	<result property="accountName" column="account_name" jdbcType="VARCHAR"/>
+    	<result property="password" column="password" jdbcType="BINARY"/>
+    	<result property="enable" column="enable" jdbcType="BIT"/>
+    	<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    	<result property="email" column="email" jdbcType="VARCHAR"/>
+    	<result property="wxId" column="wx_id" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="userColumnList">
+	    <![CDATA[
+			id,account_name,password,enable,create_time,email,wx_id
+	    ]]>
+	</sql>
+	
+	<!-- 统计总条目数 -->
+	<select id="findCount" resultType="java.lang.Integer" parameterType="com.myswing.model.User">
+		SELECT count(1)
+	    <![CDATA[
+	    FROM user 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="accountName != null">
+					AND account_name = #{accountName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="password != null">
+					AND password = #{password,jdbcType=BINARY}
+			   </if>
+		       <if test="enable != null">
+					AND enable = #{enable,jdbcType=BIT}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="email != null">
+					AND email = #{email,jdbcType=VARCHAR}
+			   </if>
+		       <if test="wxId != null">
+					AND wx_id = #{wxId,jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据主键查询 -->
+	<select id="selectById" resultMap="userResultMap"  parameterType="java.lang.String">
+		SELECT <include refid="userColumnList" />
+	    <![CDATA[
+	    FROM user 
+        WHERE 
+	        id = #{id,jdbcType=BIGINT}
+	    ]]>
+	</select>
+	
+	<!-- 根据条件查询 -->
+	<select id="selectByCondition" resultMap="userResultMap" parameterType="com.myswing.page.UserPage">
+		SELECT <include refid="userColumnList" />
+	    <![CDATA[
+	    FROM user 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="accountName != null">
+					AND account_name = #{accountName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="password != null">
+					AND password = #{password,jdbcType=BINARY}
+			   </if>
+		       <if test="enable != null">
+					AND enable = #{enable,jdbcType=BIT}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="email != null">
+					AND email = #{email,jdbcType=VARCHAR}
+			   </if>
+		       <if test="wxId != null">
+					AND wx_id = #{wxId,jdbcType=VARCHAR}
+			   </if>
+		</where>
+		LIMIT ${startPage},${rows}
+	</select>
+	
+		<!-- 根据条件查询 -->
+	<select id="selectOneByCondition" resultMap="userResultMap" parameterType="com.myswing.model.User">
+		SELECT <include refid="userColumnList" />
+	    <![CDATA[
+	    FROM user 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="accountName != null">
+					AND account_name = #{accountName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="password != null">
+					AND password = #{password,jdbcType=BINARY}
+			   </if>
+		       <if test="enable != null">
+					AND enable = #{enable,jdbcType=BIT}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="email != null">
+					AND email = #{email,jdbcType=VARCHAR}
+			   </if>
+		       <if test="wxId != null">
+					AND wx_id = #{wxId,jdbcType=VARCHAR}
+			   </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 根据条件查询全部 -->
+	<select id="selectByConditionAll" resultMap="userResultMap" parameterType="com.myswing.page.UserPage">
+		SELECT <include refid="userColumnList" />
+	    <![CDATA[
+	    FROM user 
+	    ]]>
+        <where>	  
+        	1=1      				
+		       <if test="id != null">
+					AND id = #{id,jdbcType=BIGINT}
+			   </if>
+		       <if test="accountName != null">
+					AND account_name = #{accountName,jdbcType=VARCHAR}
+			   </if>
+		       <if test="password != null">
+					AND password = #{password,jdbcType=BINARY}
+			   </if>
+		       <if test="enable != null">
+					AND enable = #{enable,jdbcType=BIT}
+			   </if>
+		       <if test="createTime != null">
+					AND create_time = #{createTime,jdbcType=TIMESTAMP}
+			   </if>
+		       <if test="email != null">
+					AND email = #{email,jdbcType=VARCHAR}
+			   </if>
+		       <if test="wxId != null">
+					AND wx_id = #{wxId,jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</select>
+	
+	<!-- 根据ID删除 -->
+    <delete id="deleteById"  parameterType="java.lang.String">
+	    <![CDATA[
+	        DELETE FROM user 
+	        WHERE
+	        id = #{id,jdbcType=BIGINT}
+	    ]]>
+    </delete>
+   
+  	
+  	<!-- 根据参数对象中有值的进行插入-->
+	<insert id="insert" parameterType="com.myswing.model.User" >
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    id,
+		  	</if>
+	     	<if test="accountName != null" >
+		    account_name,
+		  	</if>
+	     	<if test="password != null" >
+		    password,
+		  	</if>
+	     	<if test="enable != null" >
+		    enable,
+		  	</if>
+	     	<if test="createTime != null" >
+		    create_time,
+		  	</if>
+	     	<if test="email != null" >
+		    email,
+		  	</if>
+	     	<if test="wxId != null" >
+		    wx_id,
+		  	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	     	<if test="id != null" >
+		    #{id,jdbcType=BIGINT},
+		  	</if>
+	     	<if test="accountName != null" >
+		    #{accountName,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="password != null" >
+		    #{password,jdbcType=BINARY},
+		  	</if>
+	     	<if test="enable != null" >
+		    #{enable,jdbcType=BIT},
+		  	</if>
+	     	<if test="createTime != null" >
+		    #{createTime,jdbcType=TIMESTAMP},
+		  	</if>
+	     	<if test="email != null" >
+		    #{email,jdbcType=VARCHAR},
+		  	</if>
+	     	<if test="wxId != null" >
+		    #{wxId,jdbcType=VARCHAR},
+		  	</if>
+		</trim>
+	</insert>
+	
+	
+	<!-- 根据ID进行更新 -->
+	<update id="updateById"  parameterType="com.myswing.model.User">
+		update user
+		<set>
+			<if test="id != null" >
+			 id = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="accountName != null" >
+			 account_name = #{accountName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null" >
+			 password = #{password,jdbcType=BINARY},
+			</if>
+			<if test="enable != null" >
+			 enable = #{enable,jdbcType=BIT},
+			</if>
+			<if test="createTime != null" >
+			 create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="email != null" >
+			 email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="wxId != null" >
+			 wx_id = #{wxId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+

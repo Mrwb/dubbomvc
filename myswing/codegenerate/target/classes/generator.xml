@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+		代码生成器配置文件: 
+		1.会为所有的property生成property_dir属性,如pkg=com.company => pkg_dir=com/company
+		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
+	</comment>
+	
+	<entry key="jdbc.username">noitom</entry>
+	<entry key="jdbc.password">noitom</entry>
+	<entry key="jdbc.url">jdbc:mysql://192.168.2.23:3306/noitomoa</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+	
+	<entry key="nowdate">2017/11/01 14:48</entry>
+	<entry key="basepackage">com.myswing</entry>
+	<entry key="model">model</entry>
+	<entry key="mapper">dao</entry>
+	<entry key="page">page</entry>
+	<entry key="mapping">sqlMap</entry>
+	<entry key="service">service</entry>
+	<entry key="controller">controller</entry>
+	<!-- dubbox生成配置文件 -->
+	<entry key="baseservice">baseservice</entry>
+	<entry key="restservice">restservice</entry>
+	<entry key="interf">interf</entry>
+	<!-- dubbo生成配置文件 -->
+	<entry key="provider">provider</entry>
+	<entry key="api">api</entry>
+	<entry key="consumer">consumer</entry>
+	<entry key="xml">xml</entry>
+	<!-- 生成文件输出目录 -->
+	<entry key="outRoot">F:\\generator-output</entry>
+	
+	<!-- id和数据库的默认字段   注意用","分隔,数据库中的字段, -->
+	<entry key="idAnddefaultColum"><!-- ID,CREATED_BY,CREATED_TIME,MODIFIED_BY,MODIFIED_TIME,OWNER_ID,DELETED,STATUS,LOCKED,LOCKED_BY,GROUP_ID --></entry>
+
+	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
+	<entry key="tableRemovePrefixes">ttt_</entry>
+	
+	
+		
+	<!-- oracle需要指定jdbc.schema,其它数据库忽略此项配置  -->
+	<entry key="jdbc.schema"></entry>
+	<entry key="jdbc.catalog"></entry>
+	
+	<!-- 数据库类型映射  -->
+	<entry key="java_typemapping.java.sql.Timestamp">Timestamp</entry>
+	<entry key="java_typemapping.java.sql.Date">Date</entry>
+	<entry key="java_typemapping.java.sql.Time">Time</entry>	
+	<entry key="java_typemapping.java.lang.Byte">Integer</entry>
+	<entry key="java_typemapping.java.lang.Short">Integer</entry>
+	<entry key="java_typemapping.java.math.BigDecimal">Long</entry>
+	
+	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
+	<entry key="namespace">pages</entry>
+
+</properties>

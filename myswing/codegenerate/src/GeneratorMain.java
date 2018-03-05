@@ -15,7 +15,7 @@ public class GeneratorMain {
 
 		//根据表名称生成文件
 //		GeneratorCLAP.generateByTable("approval_flow_history");
-		GeneratorCLAP.generateByTable("approval_flow_record");
+		GeneratorCLAP.generateByTable("user");
 //		GeneratorCLAP.generateByTable("approval_flow");
 //		GeneratorCLAP.generateByTable("approval_info");
 		//打开文件夹
