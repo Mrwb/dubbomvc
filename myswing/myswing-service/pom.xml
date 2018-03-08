@@ -17,6 +17,7 @@
 		<commons_io>2.6</commons_io>
 		<freemarker_version>2.3.23</freemarker_version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hystrix_version>1.5.12</hystrix_version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -67,6 +68,12 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>${freemarker_version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>${hystrix_version}</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -20,6 +20,7 @@
 		<druid_version>1.0.27</druid_version>
 		<mysql_version>5.1.31</mysql_version>
 		<spring_version>4.3.10.RELEASE</spring_version>
+		<hystrix_version>1.5.12</hystrix_version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,6 +35,13 @@
 			<version>2.6.36</version>
 		</dependency>
 		<!-- disconf jar end -->
+		<!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>${hystrix_version}</version>
+		</dependency>
+
 		<!-- mysql包 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -70,17 +78,11 @@
 			<version>${spring_version}</version>
 		</dependency>
 		<!-- rabbitmq -->
-<!-- 		<dependency>
-			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-rabbit</artifactId>
-			<version>1.4.5.RELEASE</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.springframework.amqp</groupId> <artifactId>spring-rabbit</artifactId> 
+			<version>1.4.5.RELEASE</version> </dependency> -->
 		<!-- iReport JasperReports -->
-<!-- 		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>5.6.1</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>net.sf.jasperreports</groupId> <artifactId>jasperreports</artifactId> 
+			<version>5.6.1</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>

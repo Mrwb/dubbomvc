@@ -2,6 +2,7 @@
 package com.myswing.provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.myswing.model.User;
 import com.myswing.api.UserService;
 import com.myswing.service.UserBaseService;
@@ -20,6 +21,12 @@ public class UserServiceImpl implements UserService  {
 		User usertmp = new User();
 		usertmp.setId(18477475642212352L);
 		User user = userBaseService.findOneUser(usertmp);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    return "answer is "+user.getEmail();
 	}
 }
