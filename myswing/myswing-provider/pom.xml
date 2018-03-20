@@ -140,7 +140,7 @@
 		</pluginManagement>
 		<plugins>
 			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
-			<plugin>
+		<!-- 	<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
@@ -148,7 +148,7 @@
 					<archive>
 						<manifest>
 							<mainClass>com.alibaba.dubbo.container.Main</mainClass>
-							<!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
+							打包时 MANIFEST.MF文件不记录的时间戳版本
 							<useUniqueVersions>false</useUniqueVersions>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
@@ -158,7 +158,7 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -180,6 +180,66 @@
 					</execution>
 				</executions>
 			</plugin>
+						<plugin>  
+                <artifactId>maven-dependency-plugin</artifactId>  
+                <executions>  
+                    <execution>  
+                        <id>unpack</id>  
+                        <phase>package</phase>  
+                        <goals>  
+                            <goal>unpack</goal>  
+                        </goals>  
+                        <configuration>  
+                            <artifactItems>  
+                                <artifactItem>  
+                                    <groupId>com.alibaba</groupId>  
+                                    <artifactId>dubbo</artifactId>  
+                                    <version>2.5.3</version>  
+                                    <outputDirectory>${project.build.directory}/dubbo</outputDirectory>  
+                                    <includes>META-INF/assembly/**</includes>  
+                                </artifactItem>  
+                            </artifactItems>  
+                        </configuration>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+			<plugin>  
+                <artifactId>maven-assembly-plugin</artifactId>  
+                <configuration>  
+                    <descriptor>src/main/assembly/assembly.xml</descriptor>  
+                </configuration>  
+                <executions>  
+                    <execution>  
+                        <id>make-assembly</id>  
+                        <phase>package</phase>  
+                        <goals>  
+                            <goal>single</goal>  
+                        </goals>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+            
+			<!-- docker的maven插件，官网：https://github.com/spotify/docker-maven-plugin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.12</version>
+                <configuration>
+                	<dockerHost>http://192.168.2.23:2375</dockerHost>
+                    <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
+                    <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
+                    <imageName>${project.build.finalName}</imageName>
+                    <baseImage>java</baseImage>
+               <!--      <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint> -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}-assembly.tar.gz</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 	<!--MAVEN打包duboo可执行jar end -->

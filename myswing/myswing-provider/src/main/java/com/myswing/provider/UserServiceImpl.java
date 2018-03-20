@@ -21,12 +21,11 @@ public class UserServiceImpl implements UserService  {
 		User usertmp = new User();
 		usertmp.setId(18477475642212352L);
 		User user = userBaseService.findOneUser(usertmp);
-		try {
+/*		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	    return "answer is "+user.getEmail();
 	}
 }
