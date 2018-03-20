@@ -17,7 +17,6 @@
 		<module>myswing-api</module>
 		<module>myswing-provider</module>
 		<module>myswing-service</module>
-		<module>myswing-cms</module>
 		<module>codegenerate</module>
 	</modules>
 	<properties>
