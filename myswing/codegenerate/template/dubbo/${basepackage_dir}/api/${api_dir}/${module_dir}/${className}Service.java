@@ -2,8 +2,9 @@
 
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
-package ${basepackage}.${api};
+package ${basepackage}.${api}.${module};
 
+import ${basepackage}.${model}.JSON;
 /**
  * @version 1.0
  * @author Eric.wang
@@ -12,6 +13,6 @@ package ${basepackage}.${api};
  */
 public interface ${className}Service  {
 	
-	public String query${className}();
+	public JSON query();
 	
 }

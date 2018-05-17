@@ -7,7 +7,7 @@ package ${basepackage}.${baseservice};
 import ${basepackage}.${model}.${className};
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
-import com.noitom.dao.MybatisDao;
+import ${basepackage}.dao.MybatisDao;
 import java.util.List;
 import ${basepackage}.${page}.${className}Page;
 /**
@@ -28,8 +28,7 @@ public class ${className}BaseService  {
 	 * @return ${className}对象集合
 	 */
 	public List<${className}> find${className}(${className} ${classNameLower}){
-		List<${className}> list = (List<${className}>)dao.queryForList("${className}Mapper.selectByConditionAll", ${classNameLower},${className}.class);
+		List<${className}> list = dao.queryForList("${className}Mapper.selectByConditionAll");
 		return list;
 	}
-
 }

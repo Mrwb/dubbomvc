@@ -29,13 +29,7 @@
     <!-- 使用multicast广播注册中心暴露发现服务地址 -->
     <dubbo:registry address="zookeeper://192.168.2.23:2181"/>
 
-    <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
-    <dubbo:reference id="demoService" check="false" interface="com.myswing.api.DemoService"/>
-    
-    <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
-    <dubbo:reference id="versionUpgradeService" check="false" interface="com.myswing.api.VersionUpgradeService"/>
-    
     <!-- 远程服务代理${classNameLower}Service -->
-    <dubbo:reference id="${classNameLower}Service" check="false" interface="${basepackage}.${api}.${className}Service"/>
+    <dubbo:reference id="${classNameLower}Service" check="false" interface="${basepackage}.${api}.${module}.${className}Service" version="${version}"/>
 
 </beans>

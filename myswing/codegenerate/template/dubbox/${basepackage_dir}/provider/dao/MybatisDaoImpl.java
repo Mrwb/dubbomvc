@@ -1,18 +1,14 @@
-package ${basepackage}.dao;
+package com.uknower.dao;
 
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Resource;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
-/**
- * @version 1.0
- * @author Eric.wang
- * @date ${nowdate}
- * @email 1595905476(a)qq.com
- */
-public class MybatisDaoImpl extends SqlSessionTemplate implements MybatisDao {
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+
+public class MybatisDaoImpl extends SqlSessionTemplate  implements MybatisDao {
 	@Resource(name = "sqlSessionFactory")
 	private SqlSessionFactory sqlSessionFactory;
 	public MybatisDaoImpl(SqlSessionFactory sqlSessionFactory) {

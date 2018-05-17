@@ -2,12 +2,12 @@
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
 package ${basepackage}.${service};
-import ${basepackage}.${model}.${className};
+import ${basepackage}.${model}.${module}.${className};
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import ${basepackage}.dao.MybatisDao;
 import java.util.List;
-import ${basepackage}.${page}.${className}Page;
+import ${basepackage}.${page}.${module}.${className}Page;
 
 /**
  * @version 1.0

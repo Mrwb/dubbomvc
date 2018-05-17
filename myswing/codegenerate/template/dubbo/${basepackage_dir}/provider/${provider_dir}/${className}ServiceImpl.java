@@ -5,9 +5,10 @@
 package ${basepackage}.${provider};
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ${basepackage}.${model}.${className};
-import ${basepackage}.${api}.${className}Service;
+import ${basepackage}.${model}.${module}.${className};
+import ${basepackage}.${api}.${module}.${className}Service;
 import ${basepackage}.${service}.${className}BaseService;
+import ${basepackage}.${model}.JSON;
 /**
  * @version 1.0
  * @author Eric.wang
@@ -19,9 +20,11 @@ public class ${className}ServiceImpl implements ${className}Service  {
 	@Autowired
 	private ${className}BaseService ${classNameLower}BaseService;
 	
-	public String query${className}() {
+	public JSON query() {
+		JSON json = new JSON();
 		${className} ${classNameLower}tmp = new ${className}();
 		${className} ${classNameLower} = ${classNameLower}BaseService.findOne${className}(${classNameLower}tmp);
-	    return "answer is "+${classNameLower}.toString();
+		json.setData(${classNameLower});
+	    return json;
 	}
 }

@@ -1,13 +1,8 @@
-package ${basepackage}.dao;
+package com.uknower.dao;
 
 import java.util.List;
 import java.util.Map;
-/**
- * @version 1.0
- * @author Eric.wang
- * @date ${nowdate}
- * @email 1595905476(a)qq.com
- */
+
 public interface MybatisDao {
 	/**
 	 * 返回多个内容，并用List封装
@@ -25,10 +20,9 @@ public interface MybatisDao {
 	 * @description
 	 * @param key
 	 * @param obj
-	 * @param clazz
 	 * @return
 	 */
-	public List queryForList(String key, Object obj,Class clazz);
+	public List queryForList(String key, Object obj);
 	/**
 	 * 带分页机制的查询多个内容方法
 	 * @author wangbo
@@ -39,7 +33,7 @@ public interface MybatisDao {
 	 * @param rowBounds
 	 * @return
 	 */
-//	public List queryForList(String key, T obj,int pageStart,int pageSize);
+	public List queryForList(String key, Object obj, int pageStart, int pageSize);
 	/**
 	 * 查询出一个对象
 	 * @author wangbo
@@ -48,16 +42,7 @@ public interface MybatisDao {
 	 * @param key
 	 * @return
 	 */
-	public Object queryForObject(String key,Class clazz);
-	/**
-	 * 查询结果条目数
-	 * @author wangbo
-	 * @date 2016-04-05 下午17:41:53
-	 * @description
-	 * @param key
-	 * @return
-	 */
-	public int queryForCount(String key,Object o);
+	public Object queryForObject(String key);
 	/**
 	 * 带参数查询对象
 	 * @author wangbo
@@ -67,17 +52,7 @@ public interface MybatisDao {
 	 * @param obj
 	 * @return
 	 */
-	public Object queryForObject(String key, Object obj,Class clazz);
-	 /**
-   * 带参数查询对象
-   * @author wangbo
-   * @date 2015-04-17 下午12:34:27
-   * @description
-   * @param key
-   * @param obj
-   * @return
-   */
-  public Object queryForObject(String key, Object obj);
+	public Object queryForObject(String key, Object obj);
 	
 	/**
 	 * 根据ID查询对象
@@ -88,7 +63,7 @@ public interface MybatisDao {
 	 * @param ID
 	 * @return
 	 */
-	public Object queryForId(String key, String id,Class clazz);
+	public Object queryForId(String key, String id);
 	/**
 	 * 带参数查询，返回内容按照map封装返回，需指定返回map里的key值
 	 * @author wangbo
@@ -99,7 +74,7 @@ public interface MybatisDao {
 	 * @param column 以哪一列作为key
 	 * @return
 	 */
-//	public Map queryForMap(String key, T obj, String column);
+	public Map queryForMap(String key, Object obj, String column);
 	/**
 	 * 带分页机制，带参数查询，返回内容按照map封装返回，需指定返回map里的key值
 	 * @author wangbo
@@ -111,7 +86,7 @@ public interface MybatisDao {
 	 * @param rowBounds
 	 * @return
 	 */
-//	public Map queryForMap(String key, T obj, String column,int pageStart,int pageSize);
+	public Map queryForMap(String key, Object obj, String column, int pageStart, int pageSize);
 	/**
 	 * 不带参数，返回内容按照map封装返回，需指定返回map里的key值
 	 * @author wangbo
@@ -121,7 +96,7 @@ public interface MybatisDao {
 	 * @param column
 	 * @return
 	 */
-//	public Map queryForMap(String key, String column);
+	public Map queryForMap(String key, String column);
 	/**
 	 * 不带参数内容，插入数据方法
 	 * @author wangbo
@@ -130,7 +105,7 @@ public interface MybatisDao {
 	 * @param key
 	 * @return
 	 */
-//	public int insertObj(String key);
+	public int insertObj(String key);
 	/**
 	 * 按照传参内容，插入数据
 	 * @author wangbo
@@ -149,7 +124,7 @@ public interface MybatisDao {
 	 * @param key
 	 * @return
 	 */
-//	public int updateObj(String key);
+	public int updateObj(String key);
 	/**
 	 * 传参数更新数据
 	 * @author wangbo
@@ -168,7 +143,7 @@ public interface MybatisDao {
 	 * @param key
 	 * @return
 	 */
-//	public int deleteObj(String key);
+	public int deleteObj(String key);
 	/**
 	 * 传参数删除数据
 	 * @author wangbo
@@ -178,16 +153,25 @@ public interface MybatisDao {
 	 * @param obj
 	 * @return
 	 */
+	public int deleteObj(String key, Object obj);
+	/**
+	 * 根据id删除数据
+	 * @author wangbo
+	 * @date 2016-09-06 下午02:08:52
+	 * @description
+	 * @param key
+	 * @param obj
+	 * @return
+	 */
 	public int deleteObjById(String key, Object obj);
-	
-	 /**
-   * 传参数删除数据
-   * @author wangbo
-   * @date 2015-04-17 下午02:08:52
-   * @description
-   * @param key
-   * @param obj
-   * @return
-   */
-  public int deleteObj(String key, Object obj);
+	/**
+	 * 统计计数
+	 * @author wangbo
+	 * @date 2016-09-06 下午02:08:52
+	 * @description
+	 * @param key
+	 * @param obj
+	 * @return
+	 */
+	public int queryForCount(String key, Object obj);
 }

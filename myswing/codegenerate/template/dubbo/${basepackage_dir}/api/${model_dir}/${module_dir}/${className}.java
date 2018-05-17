@@ -1,7 +1,7 @@
 <#include "/macro.include"/>
 <#assign className = table.className>   
 <#assign classNameLower = className?uncap_first> 
-package ${basepackage}.${model};
+package ${basepackage}.${model}.${module};
 
 import java.util.Date;
 import java.sql.Timestamp;
