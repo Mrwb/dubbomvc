@@ -34,7 +34,7 @@ public class ${className}BaseService  {
 	 * @param ${className}的ID
 	 * @return 影响条数
 	 */
-	public int delete${className}(String id){
+	public int delete${className}(Object id){
 		return dao.deleteObjById("${className}Mapper.deleteById", id);
 	}
 	
@@ -52,7 +52,7 @@ public class ${className}BaseService  {
 	 * @param ${className}的ID
 	 * @return ${className}对象
 	 */
-	public ${className} get${className}(String id){
+	public ${className} get${className}(Object id){
 		return (${className})dao.queryForId("${className}Mapper.selectById", id);
 	}
 	

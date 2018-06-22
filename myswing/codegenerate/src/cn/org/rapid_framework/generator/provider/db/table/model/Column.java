@@ -20,7 +20,8 @@ import cn.org.rapid_framework.generator.util.typemapping.JdbcType;
  Column为数据库表(table)对应的列 
 
 	属性  描述  示例值  
-	sqlName  数据库原生列名  USER_ID 
+	sqlName  数据库原生列名  user_id 
+	sqlNameFirstUpper  数据库原生列名 首字母大写 User_id
 	sqlTypeName  数据库原生列类型  BIGINT 
 	sqlType  数据库原生列类型  -5 
 	defaultValue  数据库原生默认值  null 
@@ -79,6 +80,11 @@ public class Column {
 	 */
 	private String _sqlName;
 
+	/**
+	 * The name of the column upper
+	 */
+	private String _sqlNameFirstUpper;
+	
 	/**
 	 * True if the column is a primary key
 	 */
@@ -231,7 +237,6 @@ public class Column {
 	public String getSqlName() {
 		return _sqlName;
 	}
-
 	
 	/**
 	 * Gets the Pk attribute of the Column object
@@ -393,7 +398,14 @@ public class Column {
 	public String getColumnName() {
 		return columnName;
 	}
-
+	
+	/** 
+	 * 第一个字母大写的sqlName,等价于: StringHelper.capitalize(getSqlName()),示例值: User_id
+	 **/
+	public String getSqlNameFirstUpper() {
+		return StringHelper.capitalize(getSqlName());
+	}
+	
 	/** 
 	 * 第一个字母小写的columName,等价于: StringHelper.uncapitalize(getColumnName()),示例值: birthDate
 	 **/

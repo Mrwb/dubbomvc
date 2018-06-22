@@ -29,7 +29,31 @@
     <!-- 使用multicast广播注册中心暴露发现服务地址 -->
     <dubbo:registry address="zookeeper://192.168.2.23:2181"/>
 
-    <!-- 远程服务代理${classNameLower}Service -->
-    <dubbo:reference id="${classNameLower}Service" check="false" interface="${basepackage}.${api}.${module}.${className}Service" version="${version}"/>
+    <!-- 生成远程服务代理，可以和本地bean一样使用 -->
+    <dubbo:reference id="${classNameLower}Service" check="false" interface="${basepackage}.${api}.${module}.${className}Service" version="${version}">
+        <!--线程池相关参数设置，默认使用同步队列，避免队列过大造成外部等待线程过多造成系统血崩 -->
+        <dubbo:parameter key="coreSize" value="10"/>
+        <dubbo:parameter key="maximumSize" value="200"/>
+        <dubbo:parameter key="keepAliveTimeMinutes" value="1"/>
+
+        <!-- 命令熔断相关配置 -->
+        <dubbo:parameter key="requestVolumeThreshold" value="20"/>
+        <dubbo:parameter key="sleepWindowInMilliseconds" value="5000"/>
+        <dubbo:parameter key="errorThresholdPercentage" value="50"/>
+        <dubbo:parameter key="timeoutInMilliseconds" value="2000"/>
+        <dubbo:parameter key="fallbackMaxConcurrentRequests" value="100"/>
+        <dubbo:method name="query">
+            <dubbo:parameter key="fallback" value="generalFallback"/>
+        </dubbo:method>
+        <dubbo:method name="save">
+            <dubbo:parameter key="fallback" value="generalFallback"/>
+        </dubbo:method>
+        <dubbo:method name="edit">
+            <dubbo:parameter key="fallback" value="generalFallback"/>
+        </dubbo:method>
+        <dubbo:method name="delete">
+            <dubbo:parameter key="fallback" value="generalFallback"/>
+        </dubbo:method>
+    </dubbo:reference>
 
 </beans>

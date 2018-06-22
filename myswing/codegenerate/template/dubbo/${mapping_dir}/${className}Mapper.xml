@@ -37,7 +37,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 	<!-- 统计总条目数 -->
-	<select id="findCount" resultType="java.lang.Integer" parameterType="${basepackage}.${page}.${module}.${module}.${className}">
+	<select id="findCount" resultType="java.lang.Integer" parameterType="${basepackage}.${model}.${module}.${className}">
 		SELECT count(1)
 	    <![CDATA[
 	    FROM ${table.sqlName} 

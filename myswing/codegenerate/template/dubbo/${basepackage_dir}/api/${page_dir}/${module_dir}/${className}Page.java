@@ -5,7 +5,7 @@ package ${basepackage}.${page}.${module};
 
 import java.io.Serializable;
 import java.util.List;
-import ${basepackage}.${model}.${className};
+import ${basepackage}.${model}.${module}.${className};
 
 /**
  * @version 1.0

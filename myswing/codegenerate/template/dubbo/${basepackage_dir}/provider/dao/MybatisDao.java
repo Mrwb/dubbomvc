@@ -69,7 +69,7 @@ public interface MybatisDao {
 	 * @param ID
 	 * @return
 	 */
-	public Object queryForId(String key, String id);
+	public Object queryForId(String key, Object id);
 	/**
 	 * 带参数查询，返回内容按照map封装返回，需指定返回map里的key值
 	 * @author wangbo

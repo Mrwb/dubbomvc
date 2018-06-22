@@ -1,0 +1,8 @@
+com\myswing\api\ApprovalFlowRecordService.class
+com\myswing\api\UserService.class
+com\myswing\api\VersionUpgradeService.class
+com\myswing\page\ApprovalFlowRecordPage.class
+com\myswing\model\User.class
+com\myswing\model\ApprovalFlowRecord.class
+com\myswing\api\DemoService.class
+com\myswing\page\UserPage.class

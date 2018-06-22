@@ -70,7 +70,7 @@ public class MybatisDaoImpl extends SqlSessionTemplate  implements MybatisDao {
 		return update(key,obj);
 	}
 	
-	public Object queryForId(String key, String id) {
+	public Object queryForId(String key, Object id) {
 		return selectOne(key,id);
 	}
 	

@@ -1,0 +1,12 @@
+com\myswing\provider\ApprovalFlowRecordServiceImpl.class
+com\myswing\model\VersionUpgrade.class
+com\myswing\provider\Provider.class
+com\myswing\provider\UserServiceImpl.class
+com\myswing\service\ApprovalFlowRecordBaseService.class
+com\myswing\service\VersionUpgradeBaseService.class
+com\myswing\dao\MybatisDao.class
+com\myswing\provider\VersionUpgradeServiceImpl.class
+com\myswing\provider\DemoServiceImpl.class
+com\myswing\contants\MyswingConstants.class
+com\myswing\dao\MybatisDaoImpl.class
+com\myswing\service\UserBaseService.class

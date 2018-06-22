@@ -35,7 +35,7 @@
     <!-- ${className}实体类 -->
     <bean id="${classNameLower}Service" class="${basepackage}.${provider}.${className}ServiceImpl"/>
     <!-- ${className}声明需要暴露的服务接口 -->
-    <dubbo:service interface="${basepackage}.${api}.${module}.${className}Service" ref="${classNameLower}Service" version="${version}"/>
+    <dubbo:service interface="${basepackage}.${api}.${module}.${className}Service" ref="${classNameLower}Service" version="${version}" timeout="2000" retries="2"/>
     
 	<import resource="applicationContext.xml" />
 </beans>

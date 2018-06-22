@@ -4,7 +4,8 @@
 <#assign classNameLower = className?uncap_first> 
 package ${basepackage}.${api}.${module};
 
-import ${basepackage}.${model}.JSON;
+import ${basepackage}.${model}.JsonResponse;
+import ${basepackage}.${model}.${module}.${className};
 /**
  * @version 1.0
  * @author Eric.wang
@@ -13,6 +14,12 @@ import ${basepackage}.${model}.JSON;
  */
 public interface ${className}Service  {
 	
-	public JSON query();
+	public JsonResponse query(${className} ${classNameLower});
+
+	public JsonResponse save(${className} ${classNameLower});
+	
+	public JsonResponse edit(${className} ${classNameLower});
+	
+	public JsonResponse delete(${className} ${classNameLower});
 	
 }
