@@ -22,7 +22,7 @@ public class ${className}BaseService  {
 	private MybatisDao dao;
 	/**
 	 * 保存${className}对象
-	 * @param ${className}
+	 * @param ${classNameLower}
 	 * @return 影响条数
 	 */
 	public int save${className}(${className} ${classNameLower}){
@@ -31,7 +31,7 @@ public class ${className}BaseService  {
 	
 	/**
 	 * 删除${className}对象
-	 * @param ${className}的ID
+	 * @param id
 	 * @return 影响条数
 	 */
 	public int delete${className}(Object id){
@@ -40,7 +40,7 @@ public class ${className}BaseService  {
 	
 	/**
 	 * 修改${className}对象
-	 * @param ${className}
+	 * @param ${classNameLower}
 	 * @return 影响条数
 	 */
 	public int update${className}(${className} ${classNameLower}){
@@ -49,7 +49,7 @@ public class ${className}BaseService  {
 	
 	/**
 	 * 获取${className}对象
-	 * @param ${className}的ID
+	 * @param ${classNameLower}的ID
 	 * @return ${className}对象
 	 */
 	public ${className} get${className}(Object id){
@@ -58,7 +58,7 @@ public class ${className}BaseService  {
 	
 	/**
 	 * 获取${className}对象集合
-	 * @param Page
+	 * @param ${classNameLower}Page
 	 * @return ${className}对象集合
 	 */
 	public ${className}Page find${className}(${className}Page ${classNameLower}Page){
@@ -71,7 +71,7 @@ public class ${className}BaseService  {
 	
 	/**
 	 * 获取${className}对象集合
-	 * @param ${className}
+	 * @param ${classNameLower}
 	 * @return ${className}对象集合
 	 */
 	public List<${className}> find${className}(${className} ${classNameLower}){
@@ -81,7 +81,7 @@ public class ${className}BaseService  {
 	
 	/**
 	 * 获取${className}对象
-	 * @param ${className}
+	 * @param ${classNameLower}
 	 * @return ${className}对象
 	 */
 	public ${className} findOne${className}(${className} ${classNameLower}){
