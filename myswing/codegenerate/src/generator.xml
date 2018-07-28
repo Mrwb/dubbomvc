@@ -9,14 +9,14 @@
 	
 	<entry key="jdbc.username">uknower</entry>
 	<entry key="jdbc.password">uknower</entry>
-	<entry key="jdbc.url">jdbc:mysql://10.131.105.198:3306/uknower_check</entry>
+	<entry key="jdbc.url">jdbc:mysql://10.131.105.198:3306/uknower_invoice</entry>
 	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
 	
 	<entry key="nowdate">2018/07/05 14:20</entry>
 	<entry key="version">1.0.0</entry>
 	<entry key="constant">constant</entry>
 	<entry key="command">command</entry>
-	<entry key="module">check</entry>
+	<entry key="module">invoice</entry>
 	<entry key="basepackage">com.uknower</entry>
 	<entry key="model">model</entry>
 	<entry key="mapper">dao</entry>

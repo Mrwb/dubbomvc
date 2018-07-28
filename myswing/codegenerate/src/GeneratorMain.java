@@ -42,11 +42,12 @@ public class GeneratorMain {
 //		GeneratorCLAP.generateByTable("invoice_detail"); 
 //		GeneratorCLAP.generateByTable("invoice_init"); 
 //		GeneratorCLAP.generateByTable("invoice_item"); 
+		GeneratorCLAP.generateByTable("invoice_express_info"); 
 //		GeneratorCLAP.generateByTable("invoice_merchant"); 
-		GeneratorCLAP.generateByTable("check_invoice_vat"); 
-		GeneratorCLAP.generateByTable("check_invoice_freightage"); 
-		GeneratorCLAP.generateByTable("check_invoice_motorvehicle"); 
-		GeneratorCLAP.generateByTable("check_invoice_secondhandcar"); 
+//		GeneratorCLAP.generateByTable("check_invoice_vat"); 
+//		GeneratorCLAP.generateByTable("check_invoice_freightage"); 
+//		GeneratorCLAP.generateByTable("check_invoice_motorvehicle"); 
+//		GeneratorCLAP.generateByTable("check_invoice_secondhandcar"); 
 		//打开文件夹
 		Runtime.getRuntime().exec("cmd.exe /c start "+GeneratorProperties.getRequiredProperty("outRoot"));
 		
